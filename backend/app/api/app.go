@@ -1,6 +1,8 @@
 package main
 
 import (
+	"time"
+
 	"github.com/pbulteel/homebox-justfind/backend/internal/core/services"
 	"github.com/pbulteel/homebox-justfind/backend/internal/core/services/reporting/eventbus"
 	"github.com/pbulteel/homebox-justfind/backend/internal/data/ent"
@@ -33,6 +35,7 @@ func new(conf *config.Config) *app {
 	}
 
 	s.authLimiter = newAuthRateLimiter(s.conf.Auth.RateLimit)
+	s.notifierTestLimiter = newSimpleRateLimiter(10, time.Minute, s.conf.Options.TrustProxy) // 10 requests per minute
 
 	return s
 }

@@ -3715,6 +3715,10 @@ const docTemplate = `{
         "ent.TemplateField": {
             "type": "object",
             "properties": {
+                "boolean_value": {
+                    "description": "BooleanValue holds the value of the \"boolean_value\" field.",
+                    "type": "boolean"
+                },
                 "created_at": {
                     "description": "CreatedAt holds the value of the \"created_at\" field.",
                     "type": "string"
@@ -3739,8 +3743,16 @@ const docTemplate = `{
                     "description": "Name holds the value of the \"name\" field.",
                     "type": "string"
                 },
+                "number_value": {
+                    "description": "NumberValue holds the value of the \"number_value\" field.",
+                    "type": "integer"
+                },
                 "text_value": {
                     "description": "TextValue holds the value of the \"text_value\" field.",
+                    "type": "string"
+                },
+                "time_value": {
+                    "description": "TimeValue holds the value of the \"time_value\" field.",
                     "type": "string"
                 },
                 "type": {
@@ -5306,10 +5318,16 @@ const docTemplate = `{
         "templatefield.Type": {
             "type": "string",
             "enum": [
-                "text"
+                "text",
+                "number",
+                "boolean",
+                "time"
             ],
             "x-enum-varnames": [
-                "TypeText"
+                "TypeText",
+                "TypeNumber",
+                "TypeBoolean",
+                "TypeTime"
             ]
         },
         "user.Role": {
@@ -5351,6 +5369,9 @@ const docTemplate = `{
                 },
                 "oidc": {
                     "$ref": "#/definitions/v1.OIDCStatus"
+                },
+                "telemetry": {
+                    "$ref": "#/definitions/v1.TelemetryStatus"
                 },
                 "title": {
                     "type": "string"
@@ -5528,6 +5549,14 @@ const docTemplate = `{
                 "buttonText": {
                     "type": "string"
                 },
+                "enabled": {
+                    "type": "boolean"
+                }
+            }
+        },
+        "v1.TelemetryStatus": {
+            "type": "object",
+            "properties": {
                 "enabled": {
                     "type": "boolean"
                 }

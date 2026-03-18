@@ -9,11 +9,11 @@ import (
 	"github.com/google/uuid"
 	"github.com/pbulteel/homebox-justfind/backend/internal/sys/config"
 
-	_ "github.com/mattn/go-sqlite3"
 	"github.com/pbulteel/homebox-justfind/backend/internal/core/currencies"
 	"github.com/pbulteel/homebox-justfind/backend/internal/core/services/reporting/eventbus"
 	"github.com/pbulteel/homebox-justfind/backend/internal/data/ent"
 	"github.com/pbulteel/homebox-justfind/backend/internal/data/repo"
+	_ "github.com/pbulteel/homebox-justfind/backend/pkgs/cgofreesqlite"
 	"github.com/pbulteel/homebox-justfind/backend/pkgs/faker"
 )
 
@@ -40,11 +40,10 @@ func bootstrap() {
 		log.Fatal(err)
 	}
 
-	password := fk.Str(10)
 	tUser, err = tRepos.Users.Create(ctx, repo.UserCreate{
 		Name:           fk.Str(10),
 		Email:          fk.Email(),
-		Password:       &password,
+		Password:       new(fk.Str(10)),
 		IsSuperuser:    fk.Bool(),
 		DefaultGroupID: tGroup.ID,
 	})
