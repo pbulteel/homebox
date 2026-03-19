@@ -11,8 +11,9 @@ import (
 	"github.com/hay-kot/httpkit/errchain"
 	"github.com/hay-kot/httpkit/server"
 	"github.com/rs/zerolog/log"
-	"github.com/pbulteel/homebox-justfind/backend/internal/core/services"
-	"github.com/pbulteel/homebox-justfind/backend/internal/sys/validate"
+	"github.com/samber/lo"
+	"github.com/pbulteel/homebox/backend/internal/core/services"
+	"github.com/pbulteel/homebox/backend/internal/sys/validate"
 )
 
 const (
@@ -94,11 +95,10 @@ func (ctrl *V1Controller) HandleAuthLogin(ps ...AuthProvider) errchain.HandlerFu
 		panic("no auth providers provided")
 	}
 
-	providers := make(map[string]AuthProvider)
-	for _, p := range ps {
+	providers := lo.SliceToMap(ps, func(p AuthProvider) (string, AuthProvider) {
 		log.Info().Str("name", p.Name()).Msg("registering auth provider")
-		providers[p.Name()] = p
-	}
+		return p.Name(), p
+	})
 
 	return func(w http.ResponseWriter, r *http.Request) error {
 		// Extract provider query

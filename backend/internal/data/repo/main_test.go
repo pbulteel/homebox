@@ -2,15 +2,15 @@ package repo
 
 import (
 	"context"
-	"github.com/google/uuid"
-	"github.com/pbulteel/homebox-justfind/backend/internal/sys/config"
 	"log"
 	"os"
 	"testing"
 
-	_ "github.com/mattn/go-sqlite3"
+	"github.com/google/uuid"
 	"github.com/pbulteel/homebox-justfind/backend/internal/core/services/reporting/eventbus"
 	"github.com/pbulteel/homebox-justfind/backend/internal/data/ent"
+	"github.com/pbulteel/homebox-justfind/backend/internal/sys/config"
+	_ "github.com/pbulteel/homebox-justfind/backend/pkgs/cgofreesqlite"
 	"github.com/pbulteel/homebox-justfind/backend/pkgs/faker"
 )
 
